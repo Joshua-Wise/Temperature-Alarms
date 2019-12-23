@@ -4,7 +4,7 @@
     $username = "root";
     $password = "T3mp12";
     $dbname = "temp";
-    $table = $_GET["table"];
+    $table = str_replace("-","_",$_GET["table"]);
 
     // Create Connection
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -37,7 +37,7 @@ function storeData($location, $campus){
     $time = date('g:i:s A');
     // $temp = $_GET["temp"];
     $temp = substr($_GET["temp"],0,-2);
-    $table = $_GET["table"];
+    $table = str_replace("-","_",$_GET["table"]);
     
     // Server Connection Information
     $servername = "localhost";
