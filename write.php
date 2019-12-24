@@ -37,6 +37,7 @@ function storeData($location, $campus){
     $time = date('g:i:s A');
     // $temp = $_GET["temp"];
     $temp = substr($_GET["temp"],0,-2);
+    //$table = $_GET["table"];
     $table = str_replace("-","_",$_GET["table"]);
     
     // Server Connection Information

@@ -25,29 +25,9 @@
     <div class="navbar-collapse collapse justify-content-center order-2" id="collapsingNavbar">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link all" href="#">All</a>
+                <a class="nav-link all" href="./index.php">All</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link admin" href="#">Admin</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link cps" href="#">CPS</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link ces" href="#">CES</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link oes" href="#">OES</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link sgc" href="#">SGC</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link cjh" href="#">CJH</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link chs" href="#">CHS</a>
-            </li>
+            <?php echo menumod(); ?>
         </ul>
     </div>
     <span class="navbar-text small text-truncate mt-1 w-50 text-right order-1 order-md-last"></span>
@@ -55,7 +35,7 @@
     
     <!-- Content -->
     <div class="container">
-        <?php echo tempmod(); ?>
+        <?php echo tempmod($_GET["filter"]); ?>
     </div>
     
     <!-- Footer -->
@@ -74,6 +54,9 @@
             </button>
           </div>
           <div class="modal-body">
+              <?php echo displayLocations(); ?>
+              <br>
+              <hr>
               <?php echo displayAlarms(); ?>
               <br>
               <hr>
@@ -118,81 +101,21 @@
       </div>
     </div>
     
-    <!-- Menu Script -->
-    <script>
-        $(document).ready(function(){
-            $(".all").click(function(){
-                $(".CS701").show();
-                $(".CS041").show();
-                $(".CS101").show();
-                $(".CS103").show();
-                $(".CS104").show();
-                $(".CS043").show();
-                $(".CS001").show();
-            });
-            $(".admin").click(function(){
-                $(".CS701").show();
-                $(".CS041").hide();
-                $(".CS101").hide();
-                $(".CS103").hide();
-                $(".CS104").hide();
-                $(".CS043").hide();
-                $(".CS001").hide();
-            });
-            $(".cps").click(function(){
-                $(".CS701").hide();
-                $(".CS041").hide();
-                $(".CS101").hide();
-                $(".CS103").show();
-                $(".CS104").hide();
-                $(".CS043").hide();
-                $(".CS001").hide();
-            });
-            $(".ces").click(function(){
-                $(".CS701").hide();
-                $(".CS041").hide();
-                $(".CS101").show();
-                $(".CS103").hide();
-                $(".CS104").hide();
-                $(".CS043").hide();
-                $(".CS001").hide();
-            });
-            $(".oes").click(function(){
-                $(".CS701").hide();
-                $(".CS041").hide();
-                $(".CS101").hide();
-                $(".CS103").hide();
-                $(".CS104").show();
-                $(".CS043").hide();
-                $(".CS001").hide();
-            });
-            $(".sgc").click(function(){
-                $(".CS701").hide();
-                $(".CS041").hide();
-                $(".CS101").hide();
-                $(".CS103").hide();
-                $(".CS104").hide();
-                $(".CS043").show();
-                $(".CS001").hide();
-            });
-            $(".cjh").click(function(){
-                $(".CS701").hide();
-                $(".CS041").show();
-                $(".CS101").hide();
-                $(".CS103").hide();
-                $(".CS104").hide();
-                $(".CS043").hide();
-                $(".CS001").hide();
-            });
-            $(".chs").click(function(){
-                $(".CS701").hide();
-                $(".CS041").hide();
-                $(".CS101").hide();
-                $(".CS103").hide();
-                $(".CS104").hide();
-                $(".CS043").hide();
-                $(".CS001").show();
-            });
-        });
-    </script>
+    <!-- Add Location Modal -->
+    <div class="modal fade" id="locModal" tabindex="-1" role="dialog" aria-labelledby="locModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="label" style="text-align: center;">Add Location</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <?php echo renderLocForm(); ?>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 </body>

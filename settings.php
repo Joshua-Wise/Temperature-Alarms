@@ -9,7 +9,7 @@ function displayDevices(){
     {
             echo "<h4 style='text-align: center;'>Temperature Devices</h4>";
             echo "<table class='table table-sm' style='margin: 0px auto; text-align: center; table-layout: auto; width: auto;'>";
-            echo "<tr><th>Name</th><th>Campus</th><th>Location</th><th><a href='#' data-toggle='modal' data-target='#addModal' data-dismiss='modal'><i class='fas fa-plus' style='color: green; padding-top: 3px;'></i></a></th></tr>";
+            echo "<tr><th>Name</th><th>Shortcode</th><th>Location</th><th><a href='#' data-toggle='modal' data-target='#addModal' data-dismiss='modal'><i class='fas fa-plus' style='color: green; padding-top: 3px;'></i></a></th></tr>";
         // Display Data
         if ($result->num_rows > 0)
         {
@@ -28,6 +28,44 @@ function displayDevices(){
             {
             echo "</table>";
             echo "No devices available.";
+            }
+    }
+    else
+    {
+        echo "Error: " . $mysqli->error;
+    }
+        
+    // Close Connection
+    $mysqli->close();
+}
+
+function displayLocations(){
+    // Connect to DB
+    include("connect-db.php");
+
+    // Get Data
+    if ($result = $mysqli->query("SELECT * FROM locations ORDER BY ID"))
+    {
+            echo "<h4 style='text-align: center;'>Device Locations</h4>";
+            echo "<table class='table table-sm' style='margin: 0px auto; text-align: center; table-layout: auto; width: auto;'>";
+            echo "<tr><th>Name</th><th>Shortcode</th><th><a href='#' data-toggle='modal' data-target='#locModal' data-dismiss='modal'><i class='fas fa-plus' style='color: green; padding-top: 3px;'></i></a></th></tr>";
+        // Display Data
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_object())
+            {
+                echo "<tr>";
+                echo "<td>" . $row->NAME . "</td>";
+                echo "<td>" . $row->SHORTCODE . "</td>";
+                echo "<td><a href='index.php?loc-id=" . $row->ID . "'><i class='fas fa-times' style='color: red; padding-top: 3px;'></i></a></td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+        else
+            {
+            echo "</table>";
+            echo "<p style='text-align: center;'>No locations available.</p>";
             }
     }
     else
@@ -111,6 +149,22 @@ function renderAlarmForm($email = "", $temp = "", $error = "", $id = "") {
 
 }
 
+// Form Function
+function renderLocForm($email = "", $temp = "", $error = "", $id = "") {
+
+    echo "<form action='' method='post'>";
+    echo "<div class='form-group'>";
+
+    echo "<label>Name</label>"; 
+    echo "<input type='text' class='form-control' name='name' style='margin-bottom: 5px;'/>";
+    echo "<label>Shortcode</label>"; 
+    echo "<input type='text' class='form-control' name='shortcode' style='margin-bottom: 5px;'/>";
+    echo "<button type='submit' name='addloc' class='btn btn-primary' style='float: right;'>Add</button>";
+    echo "</div>";
+    echo "</form>";
+
+}
+
 // Process Form Data for New Device
 if (isset($_POST['adddevice']))
 {
@@ -188,6 +242,42 @@ if (isset($_POST['addalarm']))
     $mysqli->close();
 }
 
+// Process Form Data for New Location
+if (isset($_POST['addloc']))
+{
+    // Connect to DB
+    include("connect-db.php");
+    // Get Data
+    $name = htmlentities($_POST['name'], ENT_QUOTES);
+    $shortcode = htmlentities($_POST['shortcode'], ENT_QUOTES);
+    // Verify Contents
+    if (name == '' || $shortcode == '')
+        {
+            // If empty, error
+            $error = 'Error, fields cannot be empty.';
+        }
+    else
+    {
+        // insert the new record into the database
+        if ($stmt = $mysqli->prepare("INSERT INTO locations (name, shortcode) VALUES (?, ?)"))
+        {
+            $stmt->bind_param('ss', $name, $shortcode);
+            $stmt->execute();
+            $stmt->close();
+        }
+        else
+        {
+            echo "ERROR: Could not prepare SQL statement.";
+        }
+
+        // Redirect Index
+        header("Location: index.php");
+    }
+    
+    // Close Connection
+    $mysqli->close();
+}
+
 // Delete Device Record by ID
 if (isset($_GET['dev-id']) && is_numeric($_GET['dev-id']) && isset($_GET['dev-name']))
 {
@@ -231,6 +321,34 @@ if (isset($_GET['temp-id']) && is_numeric($_GET['temp-id']))
 
     // Remove Record
     if ($stmt = $mysqli->prepare("DELETE FROM alarms WHERE ID = ? LIMIT 1"))
+    {
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $stmt->close();
+    }
+    else
+    {
+        echo "ERROR: could not prepare SQL statement.";
+    }
+
+    // Close Connection
+    $mysqli->close();
+
+    // Reload Index
+    header("Location: index.php");
+}
+
+// Delete Location Record by ID
+if (isset($_GET['loc-id']) && is_numeric($_GET['loc-id']))
+{
+    // Connect to DB
+    include("connect-db.php");
+
+    // Get ID
+    $id = $_GET['loc-id'];
+
+    // Remove Record
+    if ($stmt = $mysqli->prepare("DELETE FROM locations WHERE ID = ? LIMIT 1"))
     {
         $stmt->bind_param("i",$id);
         $stmt->execute();
