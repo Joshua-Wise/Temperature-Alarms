@@ -15,7 +15,7 @@
             $( "#datepicker" ).datepicker({
                 onSelect: function (selectedDate) {
                     var getTable = "<?php echo $_GET["table"]; ?>";
-                    window.location.href="http://10.56.64.66/history.php?table="+getTable+"&date="+selectedDate; 
+                    window.location.href="./history.php?table="+getTable+"&date="+selectedDate; 
                 }
             });            
           });
