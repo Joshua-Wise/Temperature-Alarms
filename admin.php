@@ -11,64 +11,20 @@
 <body>
     <!-- Header -->
     <div class="jumbotron jumbotron-fluid bg-light" style="margin-bottom: 0px; padding-bottom: 5px;">
-        <h1 style="text-align: center; margin-bottom: 0px;">Temperature Alarms</h1>
+        <h1 style="display:inline; margin-left: 20px; float: left;"><a href="index.php"><i class="fas fa-chevron-left"></i></a></h1>
+        <h1 style="text-align: center; margin-bottom: 0px;">Settings</h1>
+        <br>
+        <br>
     </div>
-    
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-md navbar-light bg-light" style="margin-top: 0px;">
-    <div class="d-flex w-50 order-0">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-    <div class="navbar-collapse collapse justify-content-center order-2" id="collapsingNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link all" href="./index.php">All</a>
-            </li>
-            <?php echo menumod(); ?>
-            <li class="nav-item">
-                <a class="nav-link settings" href="./admin.php">Settings</a>
-            </li>
-        </ul>
-    </div>
-    <span class="navbar-text small text-truncate mt-1 w-50 text-right order-1 order-md-last"></span>
-    </nav>
-    
-    <!-- Content -->
-    <div class="container">
-        <?php echo tempmod($_GET["filter"]); ?>
-    </div>
-    
-    <!-- Footer -->
-    <div class="footer bg-light" style="bottom: 0; width: 100%; text-align: center; margin-top: 10px;">
-      <p>2018 &copy;</p>
-    </div>
-    
-    <!-- Settings Modal -->
-    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="label" style="text-align: center;">Settings</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <?php echo displayLocations(); ?>
-              <br>
-              <hr>
-              <?php echo displayAlarms(); ?>
-              <br>
-              <hr>
-              <br>
-              <?php echo displayDevices(); ?>
-          </div>
-        </div>
-      </div>
-    </div>
-    
+    <?php echo displayLocations(); ?>
+        <br>
+        <hr>
+    <?php echo displayAlarms(); ?>
+        <br>
+        <hr>
+        <br>
+    <?php echo displayDevices(); ?>
+              
     <!-- Add Device Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -119,5 +75,9 @@
         </div>
       </div>
     </div>
+    
+    <br>
+    <br>
+    <br>
     
 </body>

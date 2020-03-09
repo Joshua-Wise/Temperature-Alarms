@@ -196,7 +196,7 @@ if (isset($_POST['adddevice']))
         }
 
         // Redirect Index
-        header("Location: index.php");
+        header("Location: admin.php");
     }
     
     // Close Connection
@@ -235,7 +235,7 @@ if (isset($_POST['addalarm']))
         }
 
         // Redirect Index
-        header("Location: index.php");
+        header("Location: admin.php");
     }
     
     // Close Connection
@@ -271,7 +271,7 @@ if (isset($_POST['addloc']))
         }
 
         // Redirect Index
-        header("Location: index.php");
+        header("Location: admin.php");
     }
     
     // Close Connection
@@ -307,7 +307,7 @@ if (isset($_GET['dev-id']) && is_numeric($_GET['dev-id']) && isset($_GET['dev-na
     clearTable($name);
     
     // Reload Index
-    header("Location: index.php");
+    header("Location: admin.php");
 }
 
 // Delete Alarm Record by ID
@@ -335,7 +335,7 @@ if (isset($_GET['temp-id']) && is_numeric($_GET['temp-id']))
     $mysqli->close();
 
     // Reload Index
-    header("Location: index.php");
+    header("Location: admin.php");
 }
 
 // Delete Location Record by ID
@@ -363,7 +363,7 @@ if (isset($_GET['loc-id']) && is_numeric($_GET['loc-id']))
     $mysqli->close();
 
     // Reload Index
-    header("Location: index.php");
+    header("Location: admin.php");
 }
 
 // Create Table for Device
