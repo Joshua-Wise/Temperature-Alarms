@@ -1,3 +1,4 @@
+<?php require_once('secure.php'); ?>
 <?php include "read.php"; ?>
 <?php include "settings.php"; ?>
 <head>
