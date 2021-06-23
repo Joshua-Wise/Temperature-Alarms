@@ -62,6 +62,36 @@
         $conn->close();
     }
 
+    function pulldate($table) { 
+
+        // Server Connection Information
+        $servername = "localhost";
+        $username = "root";
+        $password = "T3mp12";
+        $dbname = "temp";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check Connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } 
+        // Get Row from Database
+        $sql = "SELECT * FROM $table ORDER BY id DESC LIMIT 1";
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                return $row["DATE"];
+            }
+        } else {
+            return "err";
+        }
+
+        $conn->close();
+    }
+
     function getloc($table) { 
 
         // Server Connection Information
@@ -165,7 +195,7 @@
                             print "</div>";
                             print "<div class='card-footer text-muted'>";
                                 print "<span style='font-size: 12px; style=float: left; display: inline-block; padding-top:7px;'>";
-                                    print "Updated: " . gettime($row["Name"]);
+                                    print pulldate($row["Name"]) . " " . gettime($row["Name"]);
                                 print "</span>";
                                 print "<a href='history.php?table=" . $row["Name"] . "&date=" . date("m/d/Y") . "' class='btn btn-primary btn-sm' style='float: right; margin: 0px;'>History</a>";
                             print "</div>";
@@ -199,7 +229,7 @@
                             print "</div>";
                             print "<div class='card-footer text-muted'>";
                                 print "<span style='font-size: 12px; style=float: left; display: inline-block; padding-top:7px;'>";
-                                    print "Updated: " . gettime($row["Name"]);
+                                    print pulldate($row["Name"]) . " " . gettime($row["Name"]);
                                 print "</span>";
                                 print "<a href='history.php?table=" . $row["Name"] . "&date=" . date("m/d/Y") . "' class='btn btn-primary btn-sm' style='float: right; margin: 0px;'>History</a>";
                             print "</div>";
